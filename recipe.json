@@ -1,0 +1,186 @@
+{
+    "name": "Tamarind-Glazed Steak with Crispy Curried Chickpeas and Ginger Greens",
+    "steps": [
+        {
+            "order": 0,
+            "title": "Marinate Steak",
+            "timer": {
+                "minutes": 10
+            },
+            "ingredients": [
+                {
+                    "order": 0,
+                    "name": "ten ounce inside round steak",
+                    "description": "Beef round is a large primal cut consisting of well-exercised muscles from the leg and rump of the animal.",
+                    "media": "/media/inside-round-steak.jpg"
+                },
+                {
+                    "order": 1,
+                    "name": "taramrind paste",
+                    "description": "Tamarind paste is a common ingredient usually featured in the preparation of a myriad of delicacies around the world. The paste is prepared from tamarind – a sticky sour tasting fruit that grows on bean-like pods on tamarind trees.",
+                    "media": "/media/tamarind-paste.jpg"
+                },
+                {
+                    "order": 2,
+                    "name": "soy sauce",
+                    "description": "The sauce of a small soy.",
+                    "media": "/media/soy-sauce.jpg"
+                },
+                {
+                    "order": 3,
+                    "name": "agave",
+                    "description": "Agave baby.",
+                    "media": "/media/agave-nectar.jpg"
+                },
+                {
+                    "order": 4,
+                    "name": "sesame oil",
+                    "description": "The oil of a large sesame.",
+                    "media": "/media/sesame-oil.jpg"
+                }
+            ],
+            "equipment": [
+                {
+                    "order": 0,
+                    "name": "paper towels",
+                    "description": "Towels made of paper.",
+                    "media": "/media/paper-towels.jpg"
+                },
+                {
+                    "order": 1,
+                    "name": "resealable plastic bag",
+                    "description": "A plastic bag with added technology for sealing and resealing.",
+                    "media": "/media/plastic-bag.jpg"
+                }
+            ],
+            "instructions" : "Preheat oven to four hundred and twenty five degrees fareinheit. Rinse steak and pat dry with paper towel, In a large resealable plastic bag, combine tamarind paste, soy sauce, agave, and half of the sesame oil. Add steak, turn to coat, and set aside to marinate for about ten minutes at room temperature.",
+            "vocabTerms" : [
+                {
+                    "order": 0,
+                    "name": "marinate",
+                    "description": "To marin something before you ate it.",
+                    "media": "/media/marinate.jpg"
+                }
+            ]
+        },
+        {
+            "order": 1,
+            "title": "Roast Chickpeas",
+            "timer": {
+                "minutes": 15,
+                "extensionMinutes": 3
+            },
+            "ingredients": [
+                {
+                    "order": 0,
+                    "name": "chickpeas",
+                    "description": "Baby peas. Good for mashing, smashing, frying, and eating in just about all forms.",
+                    "media": "/media/chickpeas.jpg"
+                },
+                {
+                    "order": 1,
+                    "name": "curry powder",
+                    "description": "A powdered curry.",
+                    "media": "/media/curry-powder.jpg"
+                },
+                {
+                    "order": 2,
+                    "name": "one and a half tablespoons of olive oil",
+                    "description": "The oil of olives.",
+                    "media": "/media/olive-oil.jpg"
+                },
+                {
+                    "order": 3,
+                    "name": "one quarter teaspoon of kosher salt",
+                    "description": "Jewish salt.",
+                    "media": "/media/kosher-salt.jpg"
+                }
+            ],
+            "equipment": [
+                {
+                    "order": 0,
+                    "name": "paper towels",
+                    "description": "Towels made of paper.",
+                    "media": "/media/paper-towels.jpg"
+                },
+                {
+                    "order": 1,
+                    "name": "baking sheet",
+                    "description": "A sheet for baking.",
+                    "media": "/media/baking-sheet.jpg"
+                }
+            ],
+            "instructions" : "While steak marinates, drain chickpeas and rinse. On a baking sheet, toss with curry powder, one and a half tablespoons olive oil, and one quarter teasponn of kosher salt. Arrange in a single layer. Transfer to oven, and roast until crisp. Fifteen to eighteen minutes.",
+            "vocabTerms" : []
+        },
+        {
+            "order": 2,
+            "title": "Saute Chinese Broccoli",
+            "timer": {
+                "minutes": 3,
+                "extensionMinutes": 1
+            },
+            "ingredients": [
+                {
+                    "order": 0,
+                    "name": "chinese broccoli",
+                    "description": "Like normal broccoli but Chinese.",
+                    "media": "/media/chinese-broccoli.jpg"
+                },
+                {
+                    "order": 1,
+                    "name": "ginger",
+                    "description": "A soulless root.",
+                    "media": "/media/ginger.jpg"
+                },
+                {
+                    "order": 2,
+                    "name": "spinach",
+                    "description": "Popeye's secret weapon.",
+                    "media": "/media/spinach.jpg"
+                },
+                {
+                    "order": 3,
+                    "name": "sesame oil",
+                    "description": "The oil of a small sesame.",
+                    "media": "/media/sesame-oil.jpg"
+                }
+            ],
+            "equipment": [
+                {
+                    "order": 0,
+                    "name": "cutting board",
+                    "description": "A board to keep your knives off the counter.",
+                    "media": "/media/cutting-board.jpg"
+                },
+                {
+                    "order": 1,
+                    "name": "medium pan",
+                    "description": "A cooking pan for cooking of a medium size.",
+                    "media": "/media/medium-pan.jpg"
+                },
+                {
+                    "order": 2,
+                    "name": "Chinese broccoli knife",
+                    "description": "A knife specially designed for cutting Chinese broccoli.",
+                    "media": "/media/knife.jpg"
+                }
+            ],
+            "instructions" : "While chickpeas roast, rinse Chinese broccoli and cut crosswise into one inch pieces. Trim and discard skin of ginger and mince. Rinse spinach. Heat remaining sesame oil in a medium pan over medium heat. When oil is shimmering, add Chinese broccoli and ginger and saute, stirring occasionally, until softening, three to four minutes.",
+            "vocabTerms" : [
+                {
+                    "order": 0,
+                    "name": "saute",
+                    "description": "A french word meaning, cook in a pan.",
+                    "media": "/media/saute.jpg"
+                },
+                {
+                    "order": 1,
+                    "name": "mince",
+                    "description": "To cut into very tiny pieces.",
+                    "media": "/media/mince.jpg"
+                }
+            ]
+        }
+    ]
+}
