@@ -1,10 +1,11 @@
 (function () {
-  var Controls = function (recipe) {
+  var Controls = function (recipe, Presenter) {
     this.recipe = recipe;
     this.currentStepNumber = 0;
     this._getAudioContext();
     this.alarmReady = false
     this._loadAlarmAudio();
+    this.Presenter = new Presenter(this.getAllTerms())
   };
 
   Controls.prototype.SECTIONS = ["equipment", "ingredients", "instructions", "vocabTerms"];
@@ -17,26 +18,27 @@
     this.step = _.find(this.recipe.steps, { order: this.currentStepNumber });
   };
 
-  Controls.prototype.readAll = function () {
-    this.read(_.without(this.SECTIONS, "vocabTerms"));
-  };
-
   Controls.prototype.read = function (sections) {
     _.each(sections, this.readSection.bind(this))
   };
 
   Controls.prototype.readSection = function (section) {
-    console.log(section);
     var content = this._getSectionContent(section, 'name');
-    console.log(content);
+    if (section === "name") {
+      this.Presenter.displayRecipeName(content)
+    } else if (section === "instructions") {
+      this.Presenter.displayRecipeInstructions(content)
+    } else {
+      this.Presenter.displaySectionList(content, section)
+    }
     // text to speach on the section name then description
   };
 
   Controls.prototype.describe = function(term) {
     var termObject = this._findTerm(term)
     if (termObject) {
-      var description = arrayToSentences([termObject.name, termObject.description])
-      console.log(description)
+      this.Presenter.displayDescription(termObject.name, termObject.description)
+      console.log(termObject)
     } else {
       console.log("Unable to find term [" + term + "]")
     }
@@ -45,6 +47,7 @@
   Controls.prototype.show = function(term) {
     var termObject = this._findTerm(term)
     if (termObject) {
+      this.Presenter.displayImage(termObject.media)
       console.log(termObject.media)
     } else {
       console.log("Unable to find term [" + term + "]")
@@ -54,7 +57,7 @@
   Controls.prototype.startTimer = function () {
     this.activeTimer = new Timer({
       tick    : 1,
-      ontick  : function(ms) { console.log(ms + 'milliseconds left') },
+      ontick  : displayTimer,
       onstart : function() { console.log('timer started') },
       onstop  : function() { console.log('timer stop') },
       onpause : function() { console.log('timer set on pause') },
@@ -63,6 +66,8 @@
     var timerDuration = this.step.timer.minutes * 60
     this.activeTimer.start(timerDuration)
   };
+
+ 
 
   Controls.prototype.extendTimer = function () {
     this.activeTimer = new Timer({
@@ -95,7 +100,20 @@
       this.audioSource.stop()
       this.audioSource = null
     }
-  },
+  };
+
+  Controls.prototype.getAllTerms = function () {
+    var sectionsWithTerms = _.without(this.SECTIONS, "instructions")
+    return _.flatten(
+      _.map(this.recipe.steps, function (step) {
+        return _.flatten(
+          _.map(sectionsWithTerms, function(section) {
+            return _.map(step[section], 'name')
+          })
+        )
+      })
+    )
+  };
 
   // PRIVATE
 
@@ -154,18 +172,17 @@
 
   Controls.prototype._getSectionContent = function (section, contentType) {
     var content;
+    var sectionItems;
     if (section == "name") {
       content = this.recipe.name;
     } else {
-      var sectionItems = this.step[section]
+      sectionItems = this.step ? this.step[section] : _.flatten(_.map(this.recipe.steps, section))
       if (_.isString(sectionItems)) {
         content = sectionItems
       } else {
-        content = arrayToSentences(
-          _.map(sectionItems, function(item) {
-            return getItemContent(item, contentType)
-          })
-        )
+        content = _.map(sectionItems, function(item) {
+          return getItemContent(item, contentType)
+        })
       }
     }
     return content
@@ -181,10 +198,6 @@
 
   function itemContentError(item, contentType) {
     return "No attribute [" + contentType + "] on [" + item + "]";
-  }
-
-  function arrayToSentences(array) {
-    return _.join(array, ". ");
   }
 
   window.Controls = Controls;

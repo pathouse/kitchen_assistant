@@ -12,16 +12,49 @@
   </head>
   <body>
     <div class="container">
+      <button id="recordButton" class="pull-left btn btn-danger">Record</button>
+      <div class="page-header text-center">
+        <h2>Kitchen Assistant</h2>
+      </div>
       <div class="row">
-        <div id="mainContainer" class="col-lg-10 col-lg-offset-1">
+        <div class="col-lg-2">
+          <div id="instructionsContainer" class="panel panel-default" style="margin-left: -50px;">
+            <div class="panel-heading">
+              <h4>What to say when you're in the kitchen...</h4>
+            </div>
+            <div class="panel-body">
+              <ul class="list-unstyled">
+                <li>What's for dinner?</li>
+                <li>Let's get started</li>
+                <li>What ingredients do I need?</li>
+                <li>What equipment do I need?</li>
+                <li>Okay, what's next?</li>
+                <li>Go Back</li>
+                <li>What do I do now?</li>
+                <li>Start/Stop/Pause timer</li>
+                <li>Turn off alarm</li>
+                <li>List ingredients/equipment</li>
+                <li>Describe ingredient/equipment</li>
+                <li>Show ingredient/equipment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="mainContainer" class="col-lg-9">
+        </div>
+        <div class="col-lg-1">
+          <p id="timerContainer"></p>
         </div>
       </div>
     </div>
 
     <script src="/vendor/lodash.min.js"></script>
     <script src="/vendor/timer.js"></script>
+    <script src="/javascript/presenter.js"></script>
     <script src="/javascript/controls.js"></script>
     <script src="/javascript/commands.js"></script>
+    <script src="/javascript/voice_command_dictionary.js"></script>
+    <script src="/javascript/speech_handler.js"></script>
     <script src="/javascript/run.js"></script>
   </body>
 </html>

@@ -5,7 +5,7 @@
             "order": 0,
             "title": "Marinate Steak",
             "timer": {
-                "minutes": 10
+                "minutes": 1
             },
             "ingredients": [
                 {
@@ -16,7 +16,7 @@
                 },
                 {
                     "order": 1,
-                    "name": "taramrind paste",
+                    "name": "Tamarind paste",
                     "description": "Tamarind paste is a common ingredient usually featured in the preparation of a myriad of delicacies around the world. The paste is prepared from tamarind – a sticky sour tasting fruit that grows on bean-like pods on tamarind trees.",
                     "media": "/media/tamarind-paste.jpg"
                 },
@@ -53,7 +53,7 @@
                     "media": "/media/plastic-bag.jpg"
                 }
             ],
-            "instructions" : "Preheat oven to four hundred and twenty five degrees fareinheit. Rinse steak and pat dry with paper towel, In a large resealable plastic bag, combine tamarind paste, soy sauce, agave, and half of the sesame oil. Add steak, turn to coat, and set aside to marinate for about ten minutes at room temperature.",
+            "instructions" : "Preheat oven to four hundred and twenty five degrees fareinheit. Rinse steak and pat dry with paper towel. In a large resealable plastic bag, combine tamarind paste, soy sauce, agave, and half of the sesame oil. Add steak, turn to coat, and set aside to marinate for about ten minutes at room temperature.",
             "vocabTerms" : [
                 {
                     "order": 0,

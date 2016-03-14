@@ -1,72 +1,12 @@
 (function () {
-  var SpeechHandler = function (Commands) {
+  var SpeechHandler = function (Commands, Dictionary) {
     this.Commands = Commands
+    this.Dictionary = new Dictionary(Commands)
     this._loadSpeechRecognition()
-  }
-
-  SpeechHandler.prototype.start = function () {
-    this.recognition.start()
+    this._bindRecordButton()
   }
 
   // PRIVATE
-
-  SpeechHandler.prototype.COMMANDS_WITHOUT_ARGUMENTS = [
-    {
-      keywords: ["start cooking"],
-      command: this.Commands.start
-    },
-    {
-      keywords: ["next"],
-      command: this.Commands.nextStep },
-    {
-      keywords: ["previous"],
-      command: this.Commands.nextStep },
-    {
-      keywords: ["read all"],
-      command: this.Commands.readAll },
-    {
-      keywords: ["instructions"],
-      command: _.curry(this.Commands.read, ["instructions"])
-    },
-    {
-      keywords: ["start timer", "timer"],
-      command: this.Commands.startTimer
-    },
-    {
-      keywords: ["stop timer", "stop"],
-      command: this.Commands.stopTimer
-    },
-    {
-      keywords: ["pause timer", "pause"],
-      command: this.Commands.pauseTimer
-    },
-    {
-      keywords: ["extend timer", "cook longer"],
-      command: this.Commands.extendTimer
-    },
-    {
-      keywords: ["alarm off"],
-      command: this.Commands.silenceAlarm
-    }
-  ]
-
-  SpeechHandler.prototype.COMMANDS_WITH_ARGUMENTS = [
-    {
-      prefixOptions: ["list"],
-      argumentOptions: this.Commands.sectionList,
-      command: this.Commands.read
-    },
-    {
-      prefixOptions: ["describe"],
-      argumentOptions: this.Commands.termsList,
-      command: this.Commands.describe
-    },
-    {
-      prefixOptions: ["show"],
-      argumentOptions: this.Commands.termsList,
-      command: this.Commands.show
-    }
-  ]
 
   SpeechHandler.prototype._loadSpeechRecognition = function () {
     if (!('webkitSpeechRecognition' in window)) {
@@ -74,21 +14,84 @@
     } else {
       this.recognition = new webkitSpeechRecognition();
       this.recognition.lang = "en-US"
-
-      this.recognition.onstart = function () {
-        console.log("Speech Recognition Started")
-      }
-
-      this.recognition.onerror = function (event) {
-        console.log("Recognition Error!")
-        console.log(event)
-      }
-
-      this.recognition.onend = function () {
-        console.log("Speech Recognition Stopped")
-      }
-
-      this.recognition.onresult = this.handleSpeechEvent
+      this.recognition.onstart = this._onSpeechStart.bind(this)
+      this.recognition.onerror = this._onSpeechError
+      this.recognition.onend = this._onSpeechEnd.bind(this)
+      this.recognition.onresult = this._onSpeechEvent.bind(this)
     }
   }
+
+  SpeechHandler.prototype._onSpeechStart = function () {
+    $("#recordButton").text("Recording...")
+    console.log("Speech Recognition Started")
+    this.activeTranscript = ""
+  }
+
+  SpeechHandler.prototype._onSpeechEnd = function () {
+    $("#recordButton").text("Record")
+    console.log("Speech Recognition Stopped")
+    this._interpretTranscript()
+  }
+
+  SpeechHandler.prototype._onSpeechError = function (event) {
+    console.log("Recognition Error!")
+    console.log(event)
+  }
+
+  SpeechHandler.prototype._onSpeechEvent = function (event) {
+    for (var i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        this.activeTranscript += event.results[i][0].transcript
+      }
+    }
+    console.log(this.activeTranscript)
+  }
+
+  SpeechHandler.prototype._interpretTranscript = function () {
+    var transcript = this.activeTranscript
+    var simpleCommandExecuted = this._findAndExecuteSimpleCommand(transcript)
+    if (!simpleCommandExecuted) {
+      this._findAndExecuteComplexCommand(transcript)
+    }
+  }
+
+  SpeechHandler.prototype._bindRecordButton = function () {
+    var onHandlerClick = function () {
+      this.recognition.start()
+    }.bind(this)
+
+    $("#recordButton").click(onHandlerClick)
+  }
+
+  SpeechHandler.prototype._findAndExecuteSimpleCommand = function (transcript) {
+    var matchingCommand = _.find(this.Dictionary.SIMPLE_COMMANDS, function (command) {
+      return _.includes(command.keywords, transcript)
+    })
+    if (matchingCommand) {
+      this.Commands[matchingCommand.command](matchingCommand.args)
+    }
+  }
+
+  SpeechHandler.prototype._findAndExecuteComplexCommand = function (transcript) {
+    var transcriptWords = transcript.split(" ")
+    var firstWord = transcriptWords.shift()
+
+    var matchingCommand = _.find(this.Dictionary.COMPLEX_COMMANDS, function (command) {
+      return _.includes(command.prefixOptions, firstWord)
+    })
+
+    if (matchingCommand) {
+      var matchingTerm = _.find(matchingCommand.argumentOptions, function (option) {
+        return option === transcriptWords.join(" ")
+      })
+      if (matchingTerm) {
+        if (matchingCommand.modifyArguments) {
+          matchingTerm = matchingCommand.modifyArguments(matchingTerm)
+        }
+        this.Commands[matchingCommand.command](matchingTerm)
+      }
+    }
+  }
+
+  window.SpeechHandler = SpeechHandler
 })()

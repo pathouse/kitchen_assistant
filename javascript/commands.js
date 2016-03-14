@@ -1,11 +1,12 @@
 (function () {
   var Commands = function (Controls) {
     this.Controls = Controls;
+    this._loadTerms()
   }
 
   Commands.prototype.start = function () {
     this.Controls.loadStep();
-    this.Controls.readAll();
+    this.Controls.read(["instructions"]);
   };
 
   Commands.prototype.nextStep = function () {
@@ -19,11 +20,7 @@
   Commands.prototype._move = function (direction) {
     this.Controls.changeStep(direction);
     this.Controls.loadStep();
-    this.Controls.readAll();
-  };
-
-  Commands.prototype.readStep = function () {
-    this.Controls.readAll();
+    this.Controls.read(["instructions"]);
   };
 
   Commands.prototype.read = function (sections) {
@@ -60,9 +57,10 @@
 
   // USED BY SPEECH HANDLER
 
-  Commands.prototype.sectionList = this.Controls.SECTIONS
-
-  Commands.prototype.termsList = this.Controls.getAllTerms()
+  Commands.prototype._loadTerms = function () {
+    this.sectionList = this.Controls.SECTIONS
+    this.termsList = this.Controls.getAllTerms()
+  }
 
   window.Commands = Commands
 })();
