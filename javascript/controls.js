@@ -23,12 +23,14 @@
   };
 
   Controls.prototype.readSection = function (section) {
-    var content = this._getSectionContent(section, 'name');
+    var content;
     if (section === "name") {
-      this.Presenter.displayRecipeName(content)
+      this.Presenter.displayRecipeName(this.recipe.name, this.recipe.image)
     } else if (section === "instructions") {
-      this.Presenter.displayRecipeInstructions(content)
+      content = this._getSectionContent(section);
+      this.Presenter.displayRecipeInstructions(content, this.step.title, this.step.image)
     } else {
+      content = this._getSectionContent(section, 'name');
       this.Presenter.displaySectionList(content, section)
     }
     // text to speach on the section name then description
@@ -55,19 +57,23 @@
   };
 
   Controls.prototype.startTimer = function () {
-    this.activeTimer = new Timer({
-      tick    : 1,
-      ontick  : displayTimer,
-      onstart : function() { console.log('timer started') },
-      onstop  : function() { console.log('timer stop') },
-      onpause : function() { console.log('timer set on pause') },
-      onend   : this._startAlarm.bind(this)
-    });
-    var timerDuration = this.step.timer.minutes * 60
-    this.activeTimer.start(timerDuration)
+    if (this.activeTimer) {
+      this.activeTimer.start()
+      this.Presenter.timerStarted()
+    } else if (this.step && this.step.timer) {
+      this.activeTimer = new Timer({
+        tick    : 1,
+        ontick  : this.Presenter.updateTimer.bind(this.Presenter),
+        onstart : function() { console.log('timer started') },
+        onstop  : function() { console.log('timer stop') },
+        onpause : function() { console.log('timer set on pause') },
+        onend   : this._startAlarm.bind(this)
+      });
+      var timerDuration = this.step.timer.minutes * 60
+      this.activeTimer.start(timerDuration)
+      this.Presenter.displayTimer()
+    }
   };
-
- 
 
   Controls.prototype.extendTimer = function () {
     this.activeTimer = new Timer({
@@ -86,12 +92,14 @@
   Controls.prototype.pauseTimer = function () {
     if (this.activeTimer) {
       this.activeTimer.pause()
+      this.Presenter.timerPaused()
     }
   };
 
   Controls.prototype.stopTimer = function () {
     if (this.activeTimer) {
       this.activeTimer.stop()
+      this.Presenter.removeTimer()
     }
   };
 
@@ -160,6 +168,7 @@
 
   Controls.prototype._startAlarm = function () {
     if (this.alarmReady && !this.audioSource) {
+      this.Presenter.zeroTimer()
       this.audioSource = this.audioContext.createBufferSource()
       this.audioSource.buffer = this.alarmBuffer
       this.audioSource.connect(this.audioContext.destination)

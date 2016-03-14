@@ -1,7 +1,9 @@
 {
     "name": "Tamarind-Glazed Steak with Crispy Curried Chickpeas and Ginger Greens",
+    "image": "/media/recipe-main.jpg",
     "steps": [
         {
+            "image": "/media/step-one.jpg",
             "order": 0,
             "title": "Marinate Steak",
             "timer": {
@@ -65,6 +67,7 @@
         },
         {
             "order": 1,
+            "image": "/media/step-two.jpg",
             "title": "Roast Chickpeas",
             "timer": {
                 "minutes": 15,
@@ -115,6 +118,7 @@
         },
         {
             "order": 2,
+            "image": "/media/step-three.jpg",
             "title": "Saute Chinese Broccoli",
             "timer": {
                 "minutes": 3,
