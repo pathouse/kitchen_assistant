@@ -1,66 +1,78 @@
 {
     "name": "Tamarind-Glazed Steak with Crispy Curried Chickpeas and Ginger Greens",
+    "narration": "/media/recipe-name.m4a",
     "image": "/media/recipe-main.jpg",
     "steps": [
         {
             "image": "/media/step-one.jpg",
             "order": 0,
             "title": "Marinate Steak",
+            "narration": ["/media/step1title.m4a", "/media/step11.m4a", "/media/step12.m4a", "/media/step13.m4a", "/media/step14.m4a"],
             "timer": {
-                "minutes": 1
+                "minutes": 1,
+                "announcements": [{ "ms": 30000, "narration": "" }]
             },
             "ingredients": [
                 {
                     "order": 0,
-                    "name": "inside round steak",
+                    "name": "Inside Round Steak",
                     "description": "Beef round is a large primal cut consisting of well-exercised muscles from the leg and rump of the animal.",
+                    "narration": ["/media/inside-round-steak-name.m4a", "/media/inside-round-steak-description.m4a"],
                     "media": "/media/inside-round-steak.jpg"
                 },
                 {
                     "order": 1,
-                    "name": "Tamarind paste",
+                    "name": "Tamarind Paste",
                     "description": "Tamarind paste is a common ingredient usually featured in the preparation of a myriad of delicacies around the world. The paste is prepared from tamarind – a sticky sour tasting fruit that grows on bean-like pods on tamarind trees.",
+                    "narration": ["/media/tamarind-paste-name.m4a", "/media/tamarind-paste-description.m4a"],
                     "media": "/media/tamarind-paste.jpg"
                 },
                 {
                     "order": 2,
-                    "name": "soy sauce",
+                    "name": "Soy Sauce",
                     "description": "The sauce of a small soy.",
+                    "narration": ["/media/soy-sauce-name.m4a", "/media/soy-sauce-description.m4a"],
                     "media": "/media/soy-sauce.jpg"
                 },
                 {
                     "order": 3,
-                    "name": "agave",
+                    "name": "Agave",
                     "description": "Agave baby.",
+                    "narration": ["/media/agave-name.m4a", "/media/agave-description.m4a"],
                     "media": "/media/agave-nectar.jpg"
                 },
                 {
                     "order": 4,
-                    "name": "sesame oil",
+                    "name": "Sesame Oil",
                     "description": "The oil of a large sesame.",
+                    "narration": ["/media/sesame-oil-name.m4a", "/media/sesame-oil-description.m4a"],
                     "media": "/media/sesame-oil.jpg"
                 }
             ],
             "equipment": [
                 {
                     "order": 0,
-                    "name": "paper towels",
+                    "name": "Paper Towels",
                     "description": "Towels made of paper.",
+                    "narration": ["/media/paper-towels-name.m4a", "/media/paper-towels-description.m4a"],
                     "media": "/media/paper-towels.jpg"
                 },
                 {
                     "order": 1,
-                    "name": "resealable plastic bag",
+                    "name": "Resealable Plastic Bag",
                     "description": "A plastic bag with added technology for sealing and resealing.",
+                    "narration": ["/media/plastic-bag-name.m4a", "/media/plastic-bag-description.m4a"],
                     "media": "/media/plastic-bag.jpg"
                 }
             ],
             "instructions" : "Preheat oven to four hundred and twenty five degrees fareinheit. Rinse steak and pat dry with paper towel. In a large resealable plastic bag, combine tamarind paste, soy sauce, agave, and half of the sesame oil. Add steak, turn to coat, and set aside to marinate for about ten minutes at room temperature.",
+
             "vocabTerms" : [
                 {
                     "order": 0,
-                    "name": "marinate",
+                    "name": "Marinate",
                     "description": "To marin something before you ate it.",
+                    "narration": ["/media/marinate-name.m4a", "/media/marinate-description.m4a"],
                     "media": "/media/marinate.jpg"
                 }
             ]
@@ -69,6 +81,7 @@
             "order": 1,
             "image": "/media/step-two.jpg",
             "title": "Roast Chickpeas",
+            "narration": ["/media/step2title.m4a", "/media/step21.m4a", "/media/step22.m4a", "/media/step23.m4a"],
             "timer": {
                 "minutes": 15,
                 "extensionMinutes": 3
@@ -76,50 +89,62 @@
             "ingredients": [
                 {
                     "order": 0,
-                    "name": "chickpeas",
+                    "name": "Chickpeas",
                     "description": "Baby peas. Good for mashing, smashing, frying, and eating in just about all forms.",
+                    "narration": ["/media/chickpeas-name.m4a", "/media/chickpeas-description.m4a"],
                     "media": "/media/chickpeas.jpg"
                 },
                 {
                     "order": 1,
                     "name": "curry powder",
                     "description": "A powdered curry.",
+                    "narration": ["/media/curry-powder.m4a", "/media/curry-powder-description.m4a"],
                     "media": "/media/curry-powder.jpg"
                 },
                 {
                     "order": 2,
-                    "name": "one and a half tablespoons of olive oil",
+                    "name": "Olive Oil",
                     "description": "The oil of olives.",
+                    "narration": ["/media/olive-oil-name.m4a", "/media/olive-oil-description.m4a"],
                     "media": "/media/olive-oil.jpg"
                 },
                 {
                     "order": 3,
-                    "name": "one quarter teaspoon of kosher salt",
-                    "description": "Jewish salt.",
+                    "name": "Kosher Salt",
+                    "description": "A saly salt.",
+                    "narration": ["/media/kosher-salt-name.m4a", "/media/kosher-salt-description.m4a"],
                     "media": "/media/kosher-salt.jpg"
                 }
             ],
             "equipment": [
                 {
                     "order": 0,
-                    "name": "paper towels",
+                    "name": "Paper Towels",
                     "description": "Towels made of paper.",
+                    "narration": ["/media/paper-towels-name.m4a", "/media/paper-towels-description.m4a"],
                     "media": "/media/paper-towels.jpg"
                 },
                 {
                     "order": 1,
-                    "name": "baking sheet",
+                    "name": "Baking Sheet",
                     "description": "A sheet for baking.",
+                    "narration": ["/media/baking-sheet-name.m4a", "/media/baking-sheet-description.m4a"],
                     "media": "/media/baking-sheet.jpg"
                 }
             ],
-            "instructions" : "While steak marinates, drain chickpeas and rinse. On a baking sheet, toss with curry powder, one and a half tablespoons olive oil, and one quarter teasponn of kosher salt. Arrange in a single layer. Transfer to oven, and roast until crisp. Fifteen to eighteen minutes.",
+            "instructions" : "While steak marinates, drain chickpeas and rinse. On a baking sheet, toss with curry powder, one and a half tablespoons olive oil, and one quarter teaspoon of kosher salt. Arrange in a single layer, transfer to oven, and roast until crisp, fifteen to eighteen minutes.",
             "vocabTerms" : []
         },
         {
             "order": 2,
             "image": "/media/step-three.jpg",
             "title": "Saute Chinese Broccoli",
+            "narration": ["/media/step3title.m4a",
+                          "/media/step31.m4a",
+                          "/media/step32.m4a",
+                          "/media/step33.m4a",
+                          "/media/step34.m4a",
+                          "/media/step35.m4a"],
             "timer": {
                 "minutes": 3,
                 "extensionMinutes": 1
@@ -127,46 +152,53 @@
             "ingredients": [
                 {
                     "order": 0,
-                    "name": "chinese broccoli",
+                    "name": "Chinese Broccoli",
                     "description": "Like normal broccoli but Chinese.",
+                    "narration": ["/media/chinese-broccoli-name.m4a", "/media/chinese-broccoli-description.m4a"],
                     "media": "/media/chinese-broccoli.jpg"
                 },
                 {
                     "order": 1,
-                    "name": "ginger",
+                    "name": "Ginger",
                     "description": "A soulless root.",
+                    "narration": ["/media/ginger-name.m4a", "/media/ginger-description.m4a"],
                     "media": "/media/ginger.jpg"
                 },
                 {
                     "order": 2,
-                    "name": "spinach",
+                    "name": "Spinach",
                     "description": "Popeye's secret weapon.",
+                    "narration": ["/media/spinach-name.m4a", "/media/spinach-description.m4a"],
                     "media": "/media/spinach.jpg"
                 },
                 {
                     "order": 3,
-                    "name": "sesame oil",
-                    "description": "The oil of a small sesame.",
+                    "name": "Sesame Oil",
+                    "description": "The oil of a large sesame.",
+                    "narration": ["/media/sesame-oil-name.m4a", "/media/sesame-oil-description.m4a"],
                     "media": "/media/sesame-oil.jpg"
                 }
             ],
             "equipment": [
                 {
                     "order": 0,
-                    "name": "cutting board",
+                    "name": "Cutting Board",
                     "description": "A board to keep your knives off the counter.",
+                    "narration": ["/media/cutting-board-name.m4a", "/media/cutting-board-description.m4a"],
                     "media": "/media/cutting-board.jpg"
                 },
                 {
                     "order": 1,
-                    "name": "medium pan",
+                    "name": "Medium Pan",
                     "description": "A cooking pan for cooking of a medium size.",
+                    "narration": ["/media/medium-pan-name.m4a", "media/medium-pan-description.m4a"],
                     "media": "/media/medium-pan.jpg"
                 },
                 {
                     "order": 2,
-                    "name": "Chinese broccoli knife",
+                    "name": "Chinese Broccoli Knife",
                     "description": "A knife specially designed for cutting Chinese broccoli.",
+                    "narration": ["/media/cbk-name.m4a", "/media/cbk-description.m4a"],
                     "media": "/media/knife.jpg"
                 }
             ],
@@ -174,14 +206,16 @@
             "vocabTerms" : [
                 {
                     "order": 0,
-                    "name": "saute",
-                    "description": "A french word meaning, cook in a pan.",
+                    "name": "Saute",
+                    "description": "A French word meaning, cook in a pan.",
+                    "narration": ["/media/saute-name.m4a", "/media/saute-description.m4a"],
                     "media": "/media/saute.jpg"
                 },
                 {
                     "order": 1,
-                    "name": "mince",
+                    "name": "<ince",
                     "description": "To cut into very tiny pieces.",
+                    "narration": ["/media/mince-name.m4a", "/media/mince-description.m4a"],
                     "media": "/media/mince.jpg"
                 }
             ]

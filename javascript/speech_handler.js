@@ -65,7 +65,8 @@
 
   SpeechHandler.prototype._findAndExecuteSimpleCommand = function (transcript) {
     var matchingCommand = _.find(this.Dictionary.SIMPLE_COMMANDS, function (command) {
-      return _.includes(command.keywords, transcript)
+      var downcased = _.map(command.keywords, _.lowerCase)
+      return _.includes(downcased, _.lowerCase(transcript))
     })
     if (matchingCommand) {
       this.Commands[matchingCommand.command](matchingCommand.args)
@@ -73,16 +74,17 @@
   }
 
   SpeechHandler.prototype._findAndExecuteComplexCommand = function (transcript) {
-    var transcriptWords = transcript.split(" ")
+    var transcriptWords = _.map(transcript.split(" "), _.lowerCase)
     var firstWord = transcriptWords.shift()
 
     var matchingCommand = _.find(this.Dictionary.COMPLEX_COMMANDS, function (command) {
-      return _.includes(command.prefixOptions, firstWord)
+      var downcaseOptions = _.map(command.prefixOptions, _.lowerCase)
+      return _.includes(downcaseOptions, firstWord)
     })
 
     if (matchingCommand) {
       var matchingTerm = _.find(matchingCommand.argumentOptions, function (option) {
-        return option === transcriptWords.join(" ")
+        return _.lowerCase(option) === transcriptWords.join(" ")
       })
       if (matchingTerm) {
         if (matchingCommand.modifyArguments) {

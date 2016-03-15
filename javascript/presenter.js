@@ -42,7 +42,6 @@
   }
 
   Presenter.prototype.displayDescription = function (name, description) {
-    debugger
     this.displaySectionList([name, description])
   }
 

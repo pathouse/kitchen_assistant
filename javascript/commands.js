@@ -17,6 +17,22 @@
     this._move(-1)
   };
 
+  Commands.prototype.previousAction = function () {
+    this.Controls.goBackHistory()
+  }
+
+  Commands.prototype.say = function () {
+    this.Controls.readNarration()
+  }
+
+  Commands.prototype.sayAll = function () {
+    this.Controls.readAllNarrations()
+  }
+
+  Commands.prototype.sayAgain = function () {
+    this.Controls.repeatNarration()
+  }
+
   Commands.prototype._move = function (direction) {
     this.Controls.changeStep(direction);
     this.Controls.loadStep();

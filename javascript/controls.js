@@ -1,14 +1,50 @@
 (function () {
-  var Controls = function (recipe, Presenter) {
+  var Controls = function (recipe, Presenter, SoundHandler) {
     this.recipe = recipe;
     this.currentStepNumber = 0;
-    this._getAudioContext();
-    this.alarmReady = false
-    this._loadAlarmAudio();
+    this.SoundHandler = new SoundHandler()
     this.Presenter = new Presenter(this.getAllTerms())
+    this.actionHistory = []
+    this.narrationIndex = 0
   };
 
   Controls.prototype.SECTIONS = ["equipment", "ingredients", "instructions", "vocabTerms"];
+
+  Controls.prototype.goBackHistory = function () {
+    var currentStep = this.actionHistory.pop()
+    var previousStep = this.actionHistory.pop()
+    this[_.get(previousStep, "action")](_.get(previousStep, "args"))
+  },
+
+  Controls.prototype.readNarration = function () {
+    if (!this.activeNarration) { return }
+    if (_.isString(this.activeNarration)) {
+      this.SoundHandler.play([this.activeNarration])
+    } else {
+      var idx = this.narrationIndex
+      if (idx === this.activeNarration.length - 1) {
+        this.changeStep(1)
+      }
+      this.SoundHandler.play([this.activeNarration[idx]])
+      this.narrationIndex++
+    }
+  }
+
+  Controls.prototype.repeatNarration = function () {
+    if (!this.activeNarration) { return }
+    if (_.isString(this.activeNarration)) {
+      this.SoundHandler.play([this.activeNarration])
+    } else {
+      var idx = this.narrationIndex
+      this.SoundHandler.play([this.activeNarration[idx - 1]])
+    }
+  }
+
+  Controls.prototype.readAllNarrations = function () {
+    if (!this.activeNarration) { return }
+    this.narrationIndex = 0
+    this.SoundHandler.play(this.activeNarration)
+  }
 
   Controls.prototype.changeStep = function (change) {
     this.currentStepNumber = this.currentStepNumber + change;
@@ -23,13 +59,20 @@
   };
 
   Controls.prototype.readSection = function (section) {
+    this.actionHistory.push({ action: "readSection", args: section })
     var content;
     if (section === "name") {
       this.Presenter.displayRecipeName(this.recipe.name, this.recipe.image)
+      this._updateActiveNarration(this.recipe.narration)
+      this.readNarration()
     } else if (section === "instructions") {
       content = this._getSectionContent(section);
+      this._updateActiveNarration(this.step.narration)
       this.Presenter.displayRecipeInstructions(content, this.step.title, this.step.image)
+      this.readNarration()
     } else {
+      var sectionNameNarrations = _.map(this._getSectionContent(section, "narration"), _.first)
+      this._updateActiveNarration(sectionNameNarrations)
       content = this._getSectionContent(section, 'name');
       this.Presenter.displaySectionList(content, section)
     }
@@ -37,16 +80,20 @@
   };
 
   Controls.prototype.describe = function(term) {
+    this.actionHistory.push({ action: "describe", args: term })
     var termObject = this._findTerm(term)
     if (termObject) {
+      this._updateActiveNarration(termObject.narration)
       this.Presenter.displayDescription(termObject.name, termObject.description)
       console.log(termObject)
+      this.readAllNarrations()
     } else {
       console.log("Unable to find term [" + term + "]")
     }
   };
 
   Controls.prototype.show = function(term) {
+    this.actionHistory.push({ action: "show", args: term })
     var termObject = this._findTerm(term)
     if (termObject) {
       this.Presenter.displayImage(termObject.media)
@@ -57,6 +104,16 @@
   };
 
   Controls.prototype.startTimer = function () {
+    var onTick = function (ms) {
+      this.Presenter.updateTimer(ms)
+      var announcements = this.step.timer.announcements
+      if (announcements) {
+        var currentAnnouncement = _.find(announcements, { ms: ms })
+        if (!currentAnnouncement) { return }
+        this._updateActiveNarration(currentAnnouncement.narration)
+        this.readNarration()
+      }
+    }.bind(this)
     if (this.activeTimer) {
       this.activeTimer.start()
       this.Presenter.timerStarted()
@@ -67,7 +124,7 @@
         onstart : function() { console.log('timer started') },
         onstop  : function() { console.log('timer stop') },
         onpause : function() { console.log('timer set on pause') },
-        onend   : this._startAlarm.bind(this)
+        onend   : this.SoundHandler.startAlarm.bind(this.SoundHandler)
       });
       var timerDuration = this.step.timer.minutes * 60
       this.activeTimer.start(timerDuration)
@@ -82,7 +139,7 @@
       onstart : function() { console.log('timer started') },
       onstop  : function() { console.log('timer stop') },
       onpause : function() { console.log('timer set on pause') },
-      onend   : this._startAlarm.bind(this)
+      onend   : this.SoundHandler.startAlarm.bind(this.SoundHandler)
     });
     var timerDuration = this.step.timer.extensionMinutes * 60
     // Correct way to do this is actually to add the extension to the duration of the active timer. this is a quick hack for limited functionality
@@ -105,8 +162,8 @@
 
   Controls.prototype.stopAlarm = function () {
     if (this.audioSource) {
-      this.audioSource.stop()
-      this.audioSource = null
+      this.SoundHandler.stopAlarm()
+      this.Presenter.removeTimer()
     }
   };
 
@@ -125,6 +182,11 @@
 
   // PRIVATE
 
+  Controls.prototype._updateActiveNarration = function (narration) {
+    this.narrationIndex = 0
+    this.activeNarration = narration
+  }
+
   Controls.prototype._findTerm = function(term) {
     var t = _.map(this.recipe.steps, function (step) {
       return _.map(_.without(this.SECTIONS, 'instructions'), function (section) {
@@ -135,48 +197,9 @@
     return _.first(_.compact(_.flatten(t)))
   };
 
-  Controls.prototype._getAudioContext = function () {
-    try {
-      this.audioContext = window.AudioContext ? new AudioContext() : new webkitAudioContext()
-    } catch (e) {
-      alert("Web Audio Not Supported in this Browser");
-    }
-  };
-
-  Controls.prototype._loadAlarmAudio = function () {
-    if (!this.audioContext) { return }
-
-    var request = new XMLHttpRequest();
-    request.open("GET", "/media/alarm.wav", true);
-    request.responseType = "arraybuffer";
-
-    var onSuccess = function (buffer) {
-      this.alarmBuffer = buffer;
-      this.alarmReady = true
-    }.bind(this);
-
-    var onError = function (error) {
-      console.log(error);
-    };
-
-    request.onload = function () {
-      this.audioContext.decodeAudioData(request.response, onSuccess, onError);
-    }.bind(this);
-
-    request.send();
-  };
-
   Controls.prototype._startAlarm = function () {
-    if (this.alarmReady && !this.audioSource) {
-      this.Presenter.zeroTimer()
-      this.audioSource = this.audioContext.createBufferSource()
-      this.audioSource.buffer = this.alarmBuffer
-      this.audioSource.connect(this.audioContext.destination)
-      this.audioSource.loop = true
-      this.audioSource.start(0)
-    } else {
-      window.setTimeout(this._startAlarm.bind(this), 1000)
-    }
+    this.Presenter.zeroTimer()
+    this.SoundHandler.startAlarm()
   },
 
   Controls.prototype._getSectionContent = function (section, contentType) {

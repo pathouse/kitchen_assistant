@@ -8,7 +8,7 @@
 
   AssistantRunner.prototype._loadRecipeData = function () {
     var onLoadRecipeData = function (data) {
-      this._controls = new Controls(data, Presenter)
+      this._controls = new Controls(data, Presenter, SoundHandler)
       this._commands = new Commands(this._controls)
       this._speechHandler = new SpeechHandler(this._commands, VoiceCommandDictionary)
     }.bind(this)

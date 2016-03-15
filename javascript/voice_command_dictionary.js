@@ -20,11 +20,33 @@
         command: "start"
       },
       {
-        keywords: ["next", "Next Step", "okay what's next"],
+        keywords: ["read",
+                   "speak",
+                   "what's next",
+                   "okay what's next"],
+        command: "say"
+      },
+      {
+        keywords: ["what was that",
+                   "can you repeat that",
+                   "say again please",
+                   "repeat that "],
+        command: "sayAgain"
+      },
+      {
+        keywords: ["read it all", "read everything"],
+        command: "sayAll"
+      },
+      {
+        keywords: ["Next Step"],
         command: "nextStep" },
       {
-        keywords: ["previous", "go back", "previous step"],
+        keywords: ["previous", "previous step"],
         command: "previousStep"
+      },
+      {
+        keywords: ["go back", "back"],
+        command: "previousAction"
       },
       {
         keywords: ["instructions", "what do I do now", "back to instructions"],
@@ -71,7 +93,7 @@
         modifyArguments: function(args) { return [args] }
       },
       {
-        prefixOptions: ["describe"],
+        prefixOptions: ["what's", "describe"],
         argumentOptions: this.Commands.termsList,
         command: "describe"
       },
