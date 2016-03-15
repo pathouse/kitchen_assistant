@@ -8,6 +8,10 @@
   SoundHandler.prototype.play = function (paths) {
     if (!paths) { return }
     var path = paths.shift()
+    if (!path) {
+      this.audioSource = null;
+      return
+    }
     var onLoad = function (buffer) {
       this._playBuffers(buffer, paths)
     }.bind(this)
@@ -18,7 +22,7 @@
     if (this.alarmReady && !this.audioSource) {
       this._playBuffer(this.alarmBuffer, true)
     } else {
-      window.setTimeout(this._startAlarm.bind(this), 1000)
+      window.setTimeout(this.startAlarm.bind(this), 1000)
     }
   }
 

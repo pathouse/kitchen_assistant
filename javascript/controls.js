@@ -161,10 +161,8 @@
   };
 
   Controls.prototype.stopAlarm = function () {
-    if (this.audioSource) {
-      this.SoundHandler.stopAlarm()
-      this.Presenter.removeTimer()
-    }
+    this.SoundHandler.stopAlarm()
+    this.Presenter.removeTimer()
   };
 
   Controls.prototype.getAllTerms = function () {

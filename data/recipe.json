@@ -9,8 +9,8 @@
             "title": "Marinate Steak",
             "narration": ["/media/step1title.m4a", "/media/step11.m4a", "/media/step12.m4a", "/media/step13.m4a", "/media/step14.m4a"],
             "timer": {
-                "minutes": 1,
-                "announcements": [{ "ms": 30000, "narration": "" }]
+                "minutes": 0.5,
+                "announcements": [{ "ms": 3000, "narration": "" }]
             },
             "ingredients": [
                 {
