@@ -42,7 +42,10 @@
   SoundHandler.prototype._playBuffer = function (buffer, loop, onEnd) {
     this.audioSource = this.audioContext.createBufferSource()
     this.audioSource.buffer = buffer
-    this.audioSource.connect(this.audioContext.destination)
+    var gainNode = this.audioContext.createGain()
+    this.audioSource.connect(gainNode)
+    gainNode.connect(this.audioContext.destination)
+    gainNode.gain.volume = 20.0
     this.audioSource.loop = loop
     this.audioSource.onended = onEnd
     this.audioSource.start(0)
